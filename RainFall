@@ -1,0 +1,104 @@
+package rainfalltest;
+
+public class Rainfall {
+    double[] rainFallInfo;
+    
+    //constructor for array
+
+    public Rainfall(double[] rainFallInfo) {
+        this.rainFallInfo = rainFallInfo;
+    }
+    //total rainfall for each month
+    public double getTotalRainFall() {
+        double totalRainFall = 0;
+        
+        for(int i = 0; i < rainFallInfo.length; i++) {
+            totalRainFall = totalRainFall + rainFallInfo[i];
+        }
+        
+        return totalRainFall;
+    }
+    //average monthly rainfall
+    public double getAvgMonthlyRain() {
+        return getTotalRainFall() / rainFallInfo.length;
+    }
+    //month with most the most rain
+    public int getMonthlyMost() {
+        double most = rainFallInfo[0];
+        int monthlyMost = 1;
+        
+        for(int i = 1; i < rainFallInfo.length; i++) {
+            if(rainFallInfo[i] > most) {
+                most = rainFallInfo[i];
+                monthlyMost = i + 1;
+            }  
+        }
+        
+        return monthlyMost;
+    }
+    //month with the least rain
+    public int getMonthlyLeast() {
+    double least = rainFallInfo[0];
+        int monthlyLeast = 1;
+        
+        for(int i = 1; i < rainFallInfo.length; i++) {
+            if(rainFallInfo[i] < least) {
+                least = rainFallInfo[i];
+                monthlyLeast = i + 1;
+            }  
+        }
+        
+        return monthlyLeast;
+    }
+
+}
+
+package rainfalltest;
+
+import java.util.Scanner;
+
+
+public class RainfallTest {
+    //user input info - no negative numbers as inputs
+    public static void userArrayInfo(double[] userArray) {
+        Scanner keyboard = new Scanner(System.in);
+        double input;
+        
+        for(int i = 0; i < userArray.length; i++) {
+            System.out.print("Please enter amount of rainfall for month " + 
+                    (i + 1) + ": ");
+            input = keyboard.nextDouble();
+        
+            while(input < 0) {
+                System.out.println("Error: Input must be a positive number!!!");
+                System.out.print("Please enter amount of rainfall for month " + 
+                    (i + 1) + ": ");
+                input = keyboard.nextDouble(); 
+            }
+            
+            userArray[i] = input; 
+        }
+    }
+
+    public static void main(String[] args) {
+        
+        final int MONTHS_IN_A_YEAR = 12;
+        double[] rainFallInfo = new double[MONTHS_IN_A_YEAR];
+        
+        userArrayInfo(rainFallInfo);
+        Rainfall rainFallTest = new Rainfall(rainFallInfo);
+        
+        System.out.println("----------Rainfall Stats------------");
+        System.out.printf("Total Rainfall: %.2f",
+                rainFallTest.getTotalRainFall());
+        System.out.println();
+        System.out.printf("Avg Monthly Rainfall: %.2f",
+                rainFallTest.getAvgMonthlyRain());
+        System.out.println();
+        System.out.println("Month with the most Rainfall: " +
+                rainFallTest.getMonthlyMost());
+        System.out.println("Month with the least Rainfall: " +
+                rainFallTest.getMonthlyLeast());
+    }
+    
+}
