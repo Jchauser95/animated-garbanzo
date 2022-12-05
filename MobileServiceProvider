@@ -1,0 +1,99 @@
+package mobileserviceprovider1;
+
+import java.util.Scanner;
+
+public class MobileServiceProvider1 {
+
+    
+    public static void main(String[] args) {
+        Scanner keyboard = new Scanner(System.in);
+        
+        String input;
+        char packLetter;
+        double minutes;
+        double totalCharges;
+        
+//        monthlyFee = 39.99;
+//                additionalFee = .45;
+//                minutes = 450;
+        
+        System.out.print("Enter the letter of the package purchased (A, B, "
+                + "or C): ");
+        input = keyboard.nextLine();
+        packLetter = input.charAt(0);
+        
+        System.out.print("Enter the amount of minutes used: ");
+        minutes = keyboard.nextDouble();
+        
+        switch (packLetter) {
+            
+            case 'A':
+            case 'a':
+//                monthlyFee = 39.99;
+//                additionalFee = .45;
+//                minutes = 450;
+                
+                if (minutes <= 450){ 
+                    totalCharges = 39.99;
+                    System.out.printf("Total charges:$%.2f ", totalCharges);
+                    System.out.println();
+                }    
+                else {
+                    totalCharges = 39.99 + ((minutes - 450) * 0.45);
+                    System.out.printf("Total charges:$ %.2f", totalCharges);
+                    System.out.println();
+                    
+                    if(totalCharges >= 59.99 && totalCharges < 69.99){
+                        System.out.println(String.format("By switching to "
+                                + "package B, you could save $%.2f", 
+                                (totalCharges - 59.99)));
+                    }
+                    if(totalCharges >= 69.99) {
+                        System.out.println(String.format("By switching to "
+                                + "package C, you could save $%.2f", 
+                                (totalCharges - 69.99)));
+                    }
+                    
+                }
+                break;
+               
+                case 'B':
+                case 'b': 
+//                monthlyFee = 59.99;
+//                additionalFee = .40;
+//                minutes = 900;
+                
+                if (minutes <= 900){ 
+                    totalCharges = 59.99;
+                    System.out.printf("Total charges:$ %.2f", totalCharges);
+                    System.out.println();
+                }    
+                else {
+                    totalCharges = 59.99 + ((minutes - 900) * 0.40);
+                    System.out.printf("Total charges:$ %.2f", totalCharges);
+                    System.out.println();
+                    if(totalCharges >= 69.99) {
+                        System.out.println(String.format("By switching to "
+                                + "package C, you could save $%.2f", 
+                                (totalCharges - 69.99)));
+                    }
+                }
+                break;
+                
+                case 'C':
+                case 'c':
+//                monthlyFee = 69.99;
+//                additionalFee = 0;
+//                minutes = unlimited;
+                
+                System.out.println("Total charges: $69.99");
+                break;
+
+                default:
+                    System.out.println("Error! Please enter package letter A, "
+                            + "B, or C.");
+        }
+        
+    }
+    
+}
