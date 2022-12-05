@@ -1,0 +1,126 @@
+package driverexamtest;
+
+public class DriverExam {
+    //Write a class named 'DriverExam' that holds the correct answers to the  
+    //exam in an array field.
+    //also have an array field that holds the student's answers
+    private final String[] correctAnswers = {"B", "D","A","A","C","A","B","A","C","D","B",
+        "C","D","A","D","C","C","B","D","A"};
+    private String[] studentAnswers;
+//    private boolean passed;
+//    private int totalCorrect;
+//    private int totalIncorrect;
+//    private int[] questionsMissed;
+    
+    //constructor for array
+    public DriverExam(String[] studentAnswers) {    
+        this.studentAnswers = studentAnswers;
+    }
+
+    //total correct answers
+    public int getTotalCorrect() {
+        int totalCorrectAnswers = 0;
+        
+        for(int i = 0; i < correctAnswers.length; i++) {
+            if(correctAnswers[i].equalsIgnoreCase(studentAnswers[i])) {
+                totalCorrectAnswers = totalCorrectAnswers + 1;
+            }
+        }
+        return totalCorrectAnswers;
+    }
+    //total Incorrect answers
+    public int getTotalIncorrect() {
+        int totalIncorrectAnswers = 0;
+        
+        for(int i = 0; i < correctAnswers.length; i++) {
+            if(!(correctAnswers[i].equalsIgnoreCase(studentAnswers[i]))) {
+                totalIncorrectAnswers = totalIncorrectAnswers + 1;
+            }
+        }
+        return totalIncorrectAnswers; 
+    }
+    //questions missed
+    public int[] getQuestionsMissed() {
+        int[] questionsMissed = new int[correctAnswers.length];
+        int questionsMissedCount = 0;
+        
+        for(int i = 0; i < correctAnswers.length; i++) {
+            if(!(correctAnswers[i].equalsIgnoreCase(studentAnswers[i]))) {
+                questionsMissed[questionsMissedCount] = i + 1;
+                questionsMissedCount++;
+            }
+        }
+        return questionsMissed;
+    }
+    //pass or fail
+    public boolean passed() {
+        int passScore = 15;
+        if(getTotalCorrect() >= passScore)
+            return true;
+        return false;
+    }
+    
+}
+
+package driverexamtest;
+
+import java.util.Scanner;
+
+public class DriverExamTest {
+    //user inputs students answers individually
+    //.equalsIgnoreCase 
+    
+    public static void userArrayAnswers(String[] studentAnswers) {
+        Scanner keyboard = new Scanner(System.in);
+        String input;
+        
+        for(int i = 0; i < studentAnswers.length; i++) {
+            System.out.print("Please enter the test answer for question # "  
+                    + (i + 1) + ": ");
+            input = keyboard.nextLine();
+            
+            while(!input.equalsIgnoreCase("A") 
+                    && !input.equalsIgnoreCase("B") 
+                    && !input.equalsIgnoreCase("C") 
+                    && !input.equalsIgnoreCase ("D")) {
+                System.out.println("Error: Input must be 'A', 'B', 'C', "
+                        + "or 'D'!!");
+                System.out.print("Please enter the test answer for question # " + 
+                    (i + 1) + ": ");
+                input = keyboard.nextLine(); 
+            
+            }
+            
+            studentAnswers[i] = input;
+        }
+    }
+    //output results of test    
+    public static void main(String[] args) {
+        
+        final int NUM_OF_QUESTIONS = 20;
+        String[] studentAnswers = new String[NUM_OF_QUESTIONS];
+        
+        userArrayAnswers(studentAnswers);
+        DriverExam driverExamTest = new DriverExam(studentAnswers);
+        
+        System.out.println();
+        System.out.println("----------Driver's License Exam------------");
+        System.out.println();
+        System.out.println("Total Correct answers: " 
+                + driverExamTest.getTotalCorrect());
+        System.out.println("Total Incorrect answers: " 
+                + driverExamTest.getTotalIncorrect());
+        //display specific question missed
+        for(int i = 0; i < driverExamTest.getQuestionsMissed().length; i++){
+            if(driverExamTest.getQuestionsMissed()[i] != 0)
+            System.out.println("You missed question " + 
+                    driverExamTest.getQuestionsMissed()[i]);
+        }
+        //pass or fail
+        if(driverExamTest.passed())
+            System.out.println("Congratulations on passing!");
+        else
+            System.out.println("You failed.");
+    }
+    
+}
