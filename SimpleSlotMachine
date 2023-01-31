@@ -1,0 +1,203 @@
+package slotmachinecaptsone1;
+
+import java.io.IOException;
+import java.util.Scanner;
+import java.util.Random;
+
+public class SlotMachineCaptsone1 {
+
+    public static void main(String[] args) throws IOException {
+        Scanner keyboard = new Scanner(System.in);
+        Random r = new Random();
+        
+        String name;
+        String slot1 = "";
+        String slot2 = "";
+        String slot3 = "";
+        double startBalance = 1000;
+        double currentBet = 0;
+        double amountWon;
+        double totalBet = 0;
+        double totalWinnings;
+        double totalLoss;
+
+        System.out.print("Please enter name: ");
+        name = keyboard.nextLine();
+        
+        System.out.println("Your starting balance is: $" + startBalance);
+        System.out.println("-----------------------");
+        
+        do {
+            if(startBalance == 0)
+                break;
+            System.out.print("Enter your wager amount or -99 to exit: $");
+            currentBet = keyboard.nextDouble();
+                
+            if(currentBet > 0 && currentBet <= startBalance) {
+                System.out.println();      
+
+                switch(r.nextInt(5)) {
+                case 0:  
+                    slot1 = "Cherries";
+                    System.out.print("Cherries, ");
+                    break;
+                case 1:
+                    slot1 = "Oranges";
+                    System.out.print("Oranges, ");
+                    break;
+                case 2:
+                    slot1 = "Plums";
+                    System.out.print("Plums, ");
+                    break;
+                case 3:
+                    slot1 = "Bells";
+                    System.out.print("Bells, ");
+                    break;
+                case 4:
+                    slot1 = "Melons";
+                    System.out.print("Melons, ");
+                    break;
+                case 5:
+                    slot1 = "Bars";
+                    System.out.print("Bars, ");
+                    break;
+                default:
+                    break; 
+                }       
+                switch(r.nextInt(5)) {
+                case 0:  
+                    slot2 = "Cherries";
+                    System.out.print("Cherries, ");
+                    break;
+                case 1:
+                    slot2 = "Oranges";
+                    System.out.print("Oranges, ");
+                    break;
+                case 2:
+                    slot2 = "Plums";
+                    System.out.print("Plums, ");
+                    break;
+                case 3:
+                    slot2 = "Bells";
+                    System.out.print("Bells, ");
+                    break;
+                case 4:
+                    slot2 = "Melons";
+                    System.out.print("Melons, ");
+                    break;
+                case 5:
+                    slot2 = "Bars";
+                    System.out.print("Bars, ");
+                    break;
+                default:
+                    break; 
+                }        
+                switch(r.nextInt(5)) {
+                case 0:  
+                    slot3 = "Cherries";
+                    System.out.print("Cherries");
+                    break;
+                case 1:
+                    slot3 = "Oranges";
+                    System.out.print("Oranges");
+                    break;
+                case 2:
+                    slot3 = "Plums";
+                    System.out.print("Plums");
+                    break;
+                case 3:
+                    slot3 = "Bells";
+                    System.out.print("Bells");
+                    break;
+                case 4:
+                    slot3 = "Melons";
+                    System.out.print("Melons");
+                    break;
+                case 5:
+                    slot3 = "Bars";
+                    System.out.print("Bars");
+                    break;
+                default:
+                    break; 
+                }     
+                System.out.println();
+
+                if (slot1 == slot2 && slot2 == slot3 && slot1 == slot3) {
+                    amountWon = currentBet * 3;
+                    System.out.println(String.format("You won: $%.2f", 
+                            amountWon));
+                    startBalance = (startBalance - currentBet) + amountWon;
+                    System.out.println(String.format("Balance is now: $%.2f", 
+                            startBalance));
+                }
+
+                else if (slot1 == slot2 || slot2 == slot3 || slot1 == slot3) {
+                    amountWon = currentBet * 2;
+                    System.out.println(String.format("You won: $%.2f", 
+                            amountWon));
+                    startBalance = (startBalance - currentBet) + amountWon;
+                    System.out.println(String.format("Balance is now: $%.2f", 
+                            startBalance));
+                }
+                else {
+                    System.out.println("Better luck next time!");
+                    startBalance = startBalance - currentBet;
+                    System.out.println(String.format("Balance is now: $%.2f", 
+                            startBalance));
+                }
+
+                totalBet += currentBet;
+                currentBet--;                      
+            }  
+        }
+        
+        while(currentBet != -99);
+        
+        //display the user's total amount bet, total amount won, and a message 
+        //saying how much they gained or lost from their starting funds.
+        if(currentBet == -99) {
+            System.out.println();
+            System.out.println("Thank you for playing, " + name + "!");
+            System.out.println();
+            System.out.println("--------Final Stats--------");
+            System.out.println(String.format("Total amount wagered: $%.2f", 
+                    totalBet));
+            if(startBalance > 1000) {
+                totalWinnings = startBalance - 1000;
+                System.out.println(String.format("Total amount won: $%.2f", 
+                    totalWinnings));
+                System.out.println(String.format("You have gained $%.2f", 
+                        totalWinnings) + " to your starting balance!!!");
+                System.out.println(String.format("New Starting Balance: $%.2f", 
+                    startBalance));
+            }
+
+            if(startBalance < 1000) {
+                totalLoss = 1000 - startBalance;
+                System.out.println(String.format("You have lost $%.2f", 
+                        totalLoss) + " to your starting balance :(");     
+                System.out.println(String.format("Current balance is: $%.2f", 
+                    startBalance));
+            }
+            
+            if(startBalance == 1000) {
+                System.out.println("You broke even!");
+                System.out.println(String.format("Your balance is still $%.2f", 
+                        startBalance) + "!!!");
+            } 
+            
+        }
+        
+        if(startBalance == 0) {
+            System.out.println();
+            System.out.println("Thank you for playing, " + name + "!");
+            System.out.println();
+            System.out.println("--------Final Stats--------");
+            System.out.println(String.format("Total amount wagered: $%.2f", 
+                    totalBet));
+            System.out.println("You have lost all your money!!");
+        }
+
+    }
+    
+}
